@@ -1,8 +1,10 @@
 const urls = require('./RESULT/links');
 const helpers = require('./helpers/helpers');
+const fs = require('fs');
 const axios = require('axios');
 const cheerio = require('cheerio');
 
+const dataLus = require('./data');
 
 axios(urls.links[0])
 .then(response => {
@@ -12,8 +14,17 @@ axios(urls.links[0])
     $('.models-grid', html).each(function() {
         $(this).find('a').each(function() {
 
-            const href = $(this).attr('href');
-            const name = $(this).text();
+            const new_obj = {}
+            new_obj.model_name = helpers.getModel($(this).text());
+
+            dataLus[helpers.getName(urls.links[0])].push(new_obj);
+
+            fs.writeFile("data.json", JSON.stringify(dataLus), err => {
+                if(err) {
+                    throw err
+                };
+                console.log("Data writing");
+            })
 
         })
     })
