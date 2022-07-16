@@ -6,9 +6,14 @@ exports.getName = function(link) {
         name = frist +"_"+ second;
     }
     return name
-}
+};
 
 exports.getModel = function(string) {
     const new_str = string.replace('\n', '').replace(' ', '').replace('\n', '');
     return new_str
-}
+};
+
+exports.splitUrl = function(url) {
+    const url_split = url.replace('https://www.exemple.fr/', '').split('/').slice(2);
+    return url_split
+};
